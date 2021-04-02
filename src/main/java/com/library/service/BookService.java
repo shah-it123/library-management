@@ -6,7 +6,6 @@ import java.util.Map;
 import com.library.dto.BookDTO;
 import com.library.model.Book;
 import com.library.model.ParameterMst;
-import com.library.model.UserBookHistory;
 import com.library.model.projections.AvailableBooks;
 
 public interface BookService {

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.library.dto.BookDTO;
 import com.library.model.Book;
 import com.library.model.ParameterMst;
-import com.library.model.UserBookHistory;
 import com.library.service.BookService;
 
 @RestController
