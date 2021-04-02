@@ -32,4 +32,48 @@ public class UserBookHistory {
 	@Column(name="returnedDate")
 	private Date returnedDate;
 	
+	public UserBookHistory() {
+
+	}
+
+	public UserBookHistory(User user, Book book, Date returnedDate) {
+		this.user = user;
+		this.book = book;
+		this.returnedDate = returnedDate;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Book getBook() {
+		return book;
+	}
+
+	public void setBook(Book book) {
+		this.book = book;
+	}
+
+	public Date getReturnedDate() {
+		return returnedDate;
+	}
+
+	public void setReturnedDate(Date returnedDate) {
+		this.returnedDate = returnedDate;
+	}
+	
+	
+	
 }

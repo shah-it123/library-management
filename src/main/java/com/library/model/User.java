@@ -1,6 +1,7 @@
 package com.library.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -14,6 +15,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -22,16 +25,28 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-@Table(name="users")
+@Table(name="users",
+	uniqueConstraints = {
+	    @UniqueConstraint(columnNames = {"userName"})
+	    })
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(name = "userName")
+	private String userName;
+	
+	@Column(name = "password")
+	private String password;
 	
 	@Column(name = "first_name")
 	private String firstName;
@@ -42,6 +57,13 @@ public class User {
 	@Column(name = "email")
 	private String email;
 	
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "users_roles", 
+	joinColumns = @JoinColumn(name = "user_id"), 
+	inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Collection<Role> roles;
+	
+	@JsonIgnore
 	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY,
 			cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
 						CascadeType.REFRESH})
@@ -69,31 +91,36 @@ public class User {
 	/*  
 	 * TIMESTAMPS START
 	 * */
-	
+	@JsonIgnore
 	@Temporal( TemporalType.TIMESTAMP )
     @CreationTimestamp
 	@Column(name = "creation_date")
 	private Date creationDate;
 	
+	@JsonIgnore
 	@UpdateTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updation_date")
 	private Date updationDate;
 	
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY,cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REFRESH})
     @JoinColumn(name="created_by")
     private User createdBy;
 
+	@JsonIgnore
     @OneToMany(fetch = FetchType.LAZY,cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REFRESH},mappedBy="createdBy")
     private Set<User> createdBySet = new HashSet<User>();
 	
+	@JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY,cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REFRESH})
     @JoinColumn(name="updated_by")
     private User updatedBy;
 
+	@JsonIgnore
     @OneToMany(mappedBy="updatedBy")
     private Set<User> updatedBySet = new HashSet<User>();
 	
@@ -119,6 +146,30 @@ public class User {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
+	}
+
+	public Collection<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Collection<Role> roles) {
+		this.roles = roles;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public UserBookHistory getUserBookHistory() {
@@ -220,10 +271,12 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", books=" + books + "]";
+		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", firstName=" + firstName
+				+ ", lastName=" + lastName + ", email=" + email + ", userBookHistory=" + userBookHistory + ", books="
+				+ books + "]";
 	}
 
+	
 
 	
 	

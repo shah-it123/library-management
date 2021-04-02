@@ -18,6 +18,8 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "parameter_mst")
 public class ParameterMst {
@@ -36,22 +38,25 @@ public class ParameterMst {
 	/*  
 	 * TIMESTAMPS START
 	 * */
-	
+	@JsonIgnore
 	@Temporal( TemporalType.TIMESTAMP )
     @CreationTimestamp
 	@Column(name = "creation_date")
 	private Date creationDate;
 	
+	@JsonIgnore
 	@UpdateTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updation_date")
 	private Date updationDate;
 	
+	@JsonIgnore
 	@OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REFRESH})
 	@JoinColumn(name="created_by")
 	private User createdBy;
 	
+	@JsonIgnore
 	@OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REFRESH})
 	@JoinColumn(name="updated_by")

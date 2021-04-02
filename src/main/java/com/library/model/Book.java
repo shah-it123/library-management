@@ -22,9 +22,13 @@ import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-@Table(name="books", uniqueConstraints = {
-	    @UniqueConstraint(columnNames = {"isbn"})}
+@Table(name="books", 
+	uniqueConstraints = {
+	    @UniqueConstraint(columnNames = {"isbn"})
+	    }
 )
 public class Book {
 	
@@ -41,11 +45,13 @@ public class Book {
 	@Column(name="author")
 	private String author;
 	
+	@JsonIgnore
 	@OneToOne(mappedBy = "book", fetch = FetchType.LAZY,
 			cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
 						CascadeType.REFRESH})
 	private UserBookHistory userBookHistory;
 	
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY,cascade= {CascadeType.PERSIST,CascadeType.MERGE,
 			CascadeType.DETACH,CascadeType.REFRESH})
 	@JoinColumn(name="user_id")
@@ -60,22 +66,25 @@ public class Book {
 	/*  
 	 * TIMESTAMPS START
 	 * */
-	
+	@JsonIgnore
 	@Temporal( TemporalType.TIMESTAMP )
     @CreationTimestamp
 	@Column(name = "creation_date")
 	private Date creationDate;
 	
+	@JsonIgnore
 	@UpdateTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updation_date")
 	private Date updationDate;
 	
+	@JsonIgnore
 	@OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REFRESH})
 	@JoinColumn(name="created_by")
 	private User createdBy;
 	
+	@JsonIgnore
 	@OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REFRESH})
 	@JoinColumn(name="updated_by")
