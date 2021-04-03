@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.library.filter;
 
 import java.io.IOException;
@@ -19,16 +22,32 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.library.service.UserService;
 import com.library.util.JwtUtil;
 
+/**
+ * The Class JwtFilter.
+ */
 @Component
 public class JwtFilter  extends OncePerRequestFilter {
+	
+	/** The logger. */
 	private Logger logger = Logger.getLogger(getClass().getName()); 
 	
+	/** The jwt util. */
 	@Autowired
 	private JwtUtil jwtUtil;
 	
+	/** The service. */
 	@Autowired
 	UserService service;
 
+	/**
+	 * Do filter internal.
+	 *
+	 * @param req {@link HttpServletRequest}
+	 * @param res {@link HttpServletResponse}
+	 * @param chain {@link FilterChain}
+	 * @throws ServletException {@link ServletException}
+	 * @throws IOException {@link IOException} Signals that an I/O exception has occurred.
+	 */
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.library.filter;
 
 import java.io.IOException;
@@ -10,9 +13,21 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+/**
+ * The Class CorsFilter.
+ */
 @Component
 public class CorsFilter extends OncePerRequestFilter {
 	
+	/**
+	 * Do filter internal.
+	 *
+	 * @param req {@link HttpServletRequest}
+	 * @param res {@link HttpServletResponse}
+	 * @param chain {@link FilterChain}
+	 * @throws ServletException {@link ServletException}
+	 * @throws IOException {@link IOException} Signals that an I/O exception has occurred.
+	 */
 	@Override
     public void doFilterInternal(final HttpServletRequest req, final HttpServletResponse res, final FilterChain chain) throws ServletException, IOException {
         HttpServletResponse response = (HttpServletResponse) res;

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.library.config;
 
 import java.util.Collection;
@@ -20,20 +23,36 @@ import com.library.service.SecurityService;
 import com.library.service.UserService;
 import com.library.util.JwtUtil;
 
+/**
+ * Implementing Custom Authentication.
+ *
+ * @author Shahrukh
+ */
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider{
 
+	/** The logger. */
 	private Logger logger = Logger.getLogger(getClass().getName());
 	
+	/** The security service. */
 	@Autowired
 	private SecurityService securityService;
 	
+	/** The user service. */
 	@Autowired
 	private UserService userService;
 	
+	/** The jwtutil. */
 	@Autowired
 	private JwtUtil jwtutil;
 	
+	/**
+	 * Overriding of authentication method to provide custom authentication.
+	 *
+	 * @param authentication the authentication
+	 * @return {@link Authentication}
+	 * @throws AuthenticationException the authentication exception
+	 */
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		logger.info("IN AUTHENTICATE");
@@ -61,6 +80,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider{
 	            
 	            logger.info(">>>>>>>>>>> auth " + auth);
 	            
+	            /**
+	             * Generate Authentication token and send it to the user
+	             */
 	            jwtutil.generateToken(auth);
 	            
 	            return auth;
@@ -69,10 +91,22 @@ public class CustomAuthenticationProvider implements AuthenticationProvider{
 		}
 	}
 	
+	/**
+	 * Maps Roles to Authorities and assigns them to User.
+	 *
+	 * @param roles the roles
+	 * @return the collection<? extends granted authority>
+	 */
 	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
 	}
 
+	/**
+	 * Supports.
+	 *
+	 * @param authentication the authentication
+	 * @return true, if successful
+	 */
 	@Override
 	public boolean supports(Class<?> authentication) {
 		return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);

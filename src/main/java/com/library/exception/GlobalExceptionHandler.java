@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.library.exception;
 
 import java.util.Date;
@@ -8,14 +11,32 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
+/**
+ * The Class GlobalExceptionHandler.
+ */
 @ControllerAdvice
 public class GlobalExceptionHandler {
+	
+	/**
+	 * Resource not found exception.
+	 *
+	 * @param ex {@link ResourceNotFoundException}
+	 * @param request{@link WebRequest}
+	 * @return {@link ResponseEntity}
+	 */
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<?> resourceNotFoundException(ResourceNotFoundException ex, WebRequest request){
 		ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
 		return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
 	}
 	
+	/**
+	 * Global exception handler.
+	 *
+	 * @param ex {@link Exception}
+	 * @param request{@link WebRequest}
+	 * @return {@link ResponseEntity}
+	 */
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<?> globalExceptionHandler(Exception ex, WebRequest request){
 		ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));

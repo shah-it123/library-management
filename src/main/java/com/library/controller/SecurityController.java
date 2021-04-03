@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.library.controller;
 
 import java.util.logging.Logger;
@@ -17,19 +20,33 @@ import org.springframework.web.bind.annotation.RestController;
 import com.library.util.AuthRequest;
 import com.library.util.JwtUtil;
 
+/**
+ * Security Rest Controller
+ */
 @RestController
 public class SecurityController {
 	
+	/** The jwtutil. */
 	@Autowired
 	private JwtUtil jwtutil;
 	
+	/** The authentication provider. */
 	@Autowired
 	@Qualifier("customAuthenticationProvider")
 	private AuthenticationProvider authenticationProvider;
 	
+	/** The logger. */
 	private Logger logger = Logger.getLogger(getClass().getName()); 
 	
 	
+	/**
+	 * Authenticate.
+	 *
+	 * @param request the request
+	 * @param authRequest the auth request
+	 * @return the string
+	 * @throws Exception the exception
+	 */
 	@PostMapping("/authenticate")
 	public String authenticate(HttpServletRequest request, @RequestBody AuthRequest authRequest) throws Exception {
 		

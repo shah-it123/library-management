@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.library.controller;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -34,29 +37,45 @@ import com.library.service.BookService;
 import com.library.service.UserService;
 import com.library.util.JwtUtil;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class LibrarianBookControllerTest.
+ */
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(LibrarianBookController.class)
 @WithMockUser(username = "admin", roles= {"LIBRARIAN"})
 public class LibrarianBookControllerTest {
 	
+	/** The mock mvc. */
 	@Autowired
     MockMvc mockMvc;
 	
+	/** The book service. */
 	@MockBean
 	BookService bookService;
 	
+	/** The custom authentication provider. */
 	@MockBean
 	CustomAuthenticationProvider customAuthenticationProvider;
 	
+	/** The data source. */
 	@MockBean
 	DataSource dataSource;
 	
+	/** The user service. */
 	@MockBean
 	UserService userService;
 	
+	/** The jwt util. */
 	@MockBean
 	JwtUtil jwtUtil;
 	
+	/**
+	 * Gets the all books.
+	 *
+	 * @return the all books
+	 * @throws Exception the exception
+	 */
 	@Test
 	void getAllBooks() throws Exception {
 		List<Book> bookList = new ArrayList<>();
@@ -70,6 +89,11 @@ public class LibrarianBookControllerTest {
 		.andExpect(jsonPath("$", hasSize(2))).andDo(print());
 	}
 	
+	/**
+	 * Creates the book.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	void createBook() throws Exception {
 		Book book = new Book("The Great Gatsby","GGRR1133","Gatsby");
@@ -88,6 +112,12 @@ public class LibrarianBookControllerTest {
 			.andExpect(jsonPath("$.author").value("Gatsby"));
 	}
 	
+	/**
+	 * Gets the params.
+	 *
+	 * @return the params
+	 * @throws Exception the exception
+	 */
 	@Test
 	void getParams() throws Exception {
 		// 7 days - Default Return Date
@@ -102,6 +132,11 @@ public class LibrarianBookControllerTest {
 		
 	}
 	
+	/**
+	 * Creates the parameter.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	void createParameter() throws Exception {
 		ParameterMst pmst = new ParameterMst("7","Return Date");
