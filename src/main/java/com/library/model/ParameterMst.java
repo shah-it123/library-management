@@ -80,6 +80,12 @@ public class ParameterMst {
 
 	}
 
+	public ParameterMst(String value, String description) {
+		super();
+		this.value = value;
+		this.description = description;
+	}
+
 	public Long getId() {
 		return id;
 	}

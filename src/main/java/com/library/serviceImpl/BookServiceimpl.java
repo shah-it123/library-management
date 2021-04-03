@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.library.dto.BookDTO;
+import com.library.exception.ResourceNotFoundException;
 import com.library.model.Book;
 import com.library.model.ParameterMst;
 import com.library.model.User;
@@ -80,29 +81,47 @@ public class BookServiceimpl implements BookService {
 	}
 
 	@Override
-	public List<Book> getAllBooksByName(String name) {
-		return bookRepository.findByNameIgnoreCase(name);
+	public List<Book> getAllBooksByName(String name) throws ResourceNotFoundException {
+		 List<Book> listBook = bookRepository.findByNameIgnoreCase(name);
+		 if(listBook.isEmpty()) {
+				throw new ResourceNotFoundException("Book not found for this name :: " + name);
+			}
+		 return listBook;
 	}
 
 	@Override
-	public List<Book>  getAllBooksByAuthor(String name) {
-		return bookRepository.findByAuthorIgnoreCase(name);
+	public List<Book>  getAllBooksByAuthor(String name) throws ResourceNotFoundException {		
+		List<Book> listBook = bookRepository.findByAuthorIgnoreCase(name);
+		 if(listBook.isEmpty()) {
+				throw new ResourceNotFoundException("Book not found for this author :: " + name);
+			}
+		 return listBook;
 	}
 
 	@Override
-	public List<AvailableBooks> getAvailableBooksByName(String name) {
-		return bookRepository.getAvailableBooksByName(name);
+	public List<AvailableBooks> getAvailableBooksByName(String name) throws ResourceNotFoundException {
+		List<AvailableBooks> availableList = bookRepository.getAvailableBooksByName(name);
+		if(availableList.isEmpty()) {
+			throw new ResourceNotFoundException("Book not found for this name :: " + name);
+		}
+		return availableList;
 	}
 
 	@Override
-	public List<AvailableBooks> getAvailableBooksByAuthor(String name) {
-		return bookRepository.getAvailableBooksByAuthor(name);
-	}
-
-	@Override
-	public Book updateBook(long bookId, BookDTO bookDetails) {
+	public List<AvailableBooks> getAvailableBooksByAuthor(String name)  throws ResourceNotFoundException {
+		List<AvailableBooks> availableList =  bookRepository.getAvailableBooksByAuthor(name);
 		
-		Book book = bookRepository.findById(bookId).get();
+		if(availableList.isEmpty()) {
+			throw new ResourceNotFoundException("Book not found for this author :: " + name);
+		}
+		return availableList;
+	}
+
+	@Override
+	public Book updateBook(long bookId, BookDTO bookDetails) throws ResourceNotFoundException {
+		
+		Book book = bookRepository.findById(bookId)
+				.orElseThrow(() -> new ResourceNotFoundException("Book not found for this id :: " + bookId));
 		if(bookDetails.getAuthor() != null)
 			book.setAuthor(bookDetails.getAuthor());
 		if(bookDetails.getName() != null)
@@ -121,8 +140,9 @@ public class BookServiceimpl implements BookService {
 	}
 
 	@Override
-	public Book addUserBook(long bookId) {
-		Book book = bookRepository.findById(bookId).get();
+	public Book addUserBook(long bookId) throws ResourceNotFoundException {
+		Book book = bookRepository.findById(bookId)
+				.orElseThrow(() -> new ResourceNotFoundException("Book not found for this id :: " + bookId));
 		String username = jwtUtil.getUsername();
 		
 		logger.info(">>>>> Logged in user: " + username);
@@ -142,7 +162,7 @@ public class BookServiceimpl implements BookService {
 	}
 
 	@Override
-	public ParameterMst updateParam(long paramId, ParameterMst paramDetails) {
+	public ParameterMst updateParam(long paramId, ParameterMst paramDetails) throws ResourceNotFoundException {
 		ParameterMst pmst = paramService.findById(paramId);
 		
 		pmst.setValue(paramDetails.getValue());
@@ -163,8 +183,9 @@ public class BookServiceimpl implements BookService {
 	}
 
 	@Override
-	public Map<String, Boolean> returnBook(long bookId) {
-		Book book = bookRepository.findById(bookId).get();
+	public Map<String, Boolean> returnBook(long bookId) throws ResourceNotFoundException {
+		Book book = bookRepository.findById(bookId)
+				.orElseThrow(() -> new ResourceNotFoundException("Book not found for this id :: " + bookId));
 		Map<String, Boolean> response = new HashMap<>();
 		if(book.getBookStatus().equals("P")) {
 			book.setBookStatus("R");

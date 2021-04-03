@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.library.dto.BookDTO;
+import com.library.exception.ResourceNotFoundException;
 import com.library.model.Book;
 import com.library.model.ParameterMst;
 import com.library.service.BookService;
@@ -33,13 +34,13 @@ public class LibrarianBookController {
 	
 	// get all books by name
 	@GetMapping("/books/{name}")
-	public ResponseEntity<List<Book>> getAllBooksByName(@PathVariable(value = "name") String name){
+	public ResponseEntity<List<Book>> getAllBooksByName(@PathVariable(value = "name") String name) throws ResourceNotFoundException{
 		return ResponseEntity.ok().body(bookService.getAllBooksByName(name));
 	}
 	
 	// get all books by author
 	@GetMapping("/books/author/{name}")
-	public ResponseEntity<List<Book>> getAllBooksByAuthor(@PathVariable(value = "name") String name){
+	public ResponseEntity<List<Book>> getAllBooksByAuthor(@PathVariable(value = "name") String name) throws ResourceNotFoundException{
 		return ResponseEntity.ok().body(bookService.getAllBooksByAuthor(name));
 	}
 	
@@ -58,7 +59,7 @@ public class LibrarianBookController {
 	// update books
 	@PutMapping("books/{id}")
 	public ResponseEntity<Book> updateBook(@PathVariable(value = "id") long bookId,
-		 @RequestBody BookDTO bookDetails){
+		 @RequestBody BookDTO bookDetails) throws ResourceNotFoundException{
 		return ResponseEntity.ok(bookService.updateBook(bookId, bookDetails));
 		
 	}
@@ -79,7 +80,7 @@ public class LibrarianBookController {
 	// update parameter		
 	@PutMapping("params/{id}")
 	public ResponseEntity<ParameterMst> updateParam(@PathVariable(value = "id") long paramId,
-			 @RequestBody ParameterMst paramDetails) {
+			 @RequestBody ParameterMst paramDetails) throws ResourceNotFoundException {
 		return ResponseEntity.ok(bookService.updateParam(paramId, paramDetails));
 	}
 	
@@ -91,9 +92,8 @@ public class LibrarianBookController {
 	
 	// return book from user
 	@PutMapping("books/return/{id}")
-	public Map<String, Boolean> returnBook(@PathVariable(value = "id") long bookId){
+	public Map<String, Boolean> returnBook(@PathVariable(value = "id") long bookId) throws ResourceNotFoundException{
 		return bookService.returnBook(bookId);
-		
 	}
 	
 }

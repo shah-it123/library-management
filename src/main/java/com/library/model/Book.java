@@ -108,8 +108,7 @@ public class Book {
 
 	}
 
-	public Book(Long id, String name, String isbn, String author) {
-		this.id = id;
+	public Book(String name, String isbn, String author) {
 		this.name = name;
 		this.isbn = isbn;
 		this.author = author;
