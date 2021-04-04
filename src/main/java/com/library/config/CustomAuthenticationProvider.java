@@ -23,6 +23,7 @@ import com.library.service.SecurityService;
 import com.library.service.UserService;
 import com.library.util.JwtUtil;
 
+// TODO: Auto-generated Javadoc
 /**
  * Implementing Custom Authentication.
  *
@@ -86,6 +87,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider{
 	            jwtutil.generateToken(auth);
 	            
 	            return auth;
+			case -1:
+				throw new AuthenticationCredentialsNotFoundException("Username not found!");
 			default:
 				throw new AuthenticationCredentialsNotFoundException("Invalid Credentials!");
 		}

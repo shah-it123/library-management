@@ -27,6 +27,7 @@ import com.library.filter.CorsFilter;
 import com.library.filter.JwtFilter;
 import com.library.service.UserService;
 
+// TODO: Auto-generated Javadoc
 /**
  * Security configuration of application.
  *
@@ -78,6 +79,7 @@ public class LibrarySecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 			.antMatchers("/authenticate").permitAll()
 			.antMatchers("/admin/**").hasRole("LIBRARIAN")
+			.antMatchers("/security/**").hasRole("LIBRARIAN")
 			.antMatchers("/user/**").hasRole("USER")
 			.and()
 			.formLogin().disable();

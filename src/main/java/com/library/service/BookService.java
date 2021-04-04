@@ -12,6 +12,7 @@ import com.library.exception.ResourceNotFoundException;
 import com.library.model.Book;
 import com.library.model.ParameterMst;
 import com.library.model.projections.AvailableBooks;
+import com.library.model.projections.PendingBooks;
 
 /**
  * The Interface BookService.
@@ -139,9 +140,9 @@ public interface BookService {
 	 * Gets the pending books.
 	 *
 	 * @param username the username
-	 * @return List of {@link Book}
+	 * @return List of {@link AvailableBooks}
 	 */
-	List<Book> getPendingBooks(String username);
+	List<PendingBooks> getPendingBooks(String username);
 
 	/**
 	 * Return book.

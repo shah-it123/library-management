@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.library.model.Book;
 import com.library.model.User;
 import com.library.model.projections.AvailableBooks;
+import com.library.model.projections.PendingBooks;
 
 /**
  * The Interface BookRepository.
@@ -79,6 +80,16 @@ public interface BookRepository extends JpaRepository<Book, Long>{
 	@Query("SELECT b.id as id, b.isbn as isbn, b.name as name, b.author as author "
 			+ "from Book b where (b.bookStatus is null  or b.bookStatus = 'R') and lower(b.author) LIKE lower(?1)")
 	List<AvailableBooks> getAvailableBooksByAuthor(String name);
+
+	/**
+	 * Gets the pending books of user.
+	 *
+	 * @param user {@link User}
+	 * @return List of {@link Book}
+	 */
+	@Query("SELECT b.id as id, b.isbn as isbn, b.name as name, b.author as author "
+			+ "from Book b where b.bookStatus = 'P' and b.user = ?1")
+	List<PendingBooks> getPendingBooks(User user);
 	
 //	User Queries End //
 	

@@ -21,7 +21,7 @@ import com.library.util.AuthRequest;
 import com.library.util.JwtUtil;
 
 /**
- * Security Rest Controller
+ * Security Rest Controller.
  */
 @RestController
 public class SecurityController {

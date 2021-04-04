@@ -51,13 +51,17 @@ public class SecurityServiceImpl implements SecurityService {
 		
 		if(user != null) {
 			logger.info("authorizeUser " + user.getUserName() + " , " + user.getPassword());
+			logger.info(">>>>> Check Results: " + BCrypt.checkpw(password, user.getPassword()));
 			if(username.equals(user.getUserName()) && BCrypt.checkpw(password, user.getPassword())) {
 				logger.info(">>>>>>>>>> Authenticated <<<<<<<<<<");
+			}else {
+				logger.info(">>>>>>>>>> NOT Authenticated <<<<<<<<<<");
+				return 0;
 			}
 		}else {
 			// Invalid credentials
-			logger.info(">>>>>>>>>> NOT Authenticated <<<<<<<<<<");
-			return 0;
+			logger.info(">>>>>>>>>> Invalid User <<<<<<<<<<");
+			return -1;
 		}
 		
 		return 1;

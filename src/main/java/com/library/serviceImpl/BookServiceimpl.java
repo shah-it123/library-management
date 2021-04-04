@@ -23,6 +23,7 @@ import com.library.model.ParameterMst;
 import com.library.model.User;
 import com.library.model.UserBookHistory;
 import com.library.model.projections.AvailableBooks;
+import com.library.model.projections.PendingBooks;
 import com.library.repository.BookRepository;
 import com.library.service.BookService;
 import com.library.service.ParamService;
@@ -299,9 +300,9 @@ public class BookServiceimpl implements BookService {
 	 * @return the pending books
 	 */
 	@Override
-	public List<Book> getPendingBooks(String username) {
+	public List<PendingBooks> getPendingBooks(String username) {
 		User user = userService.findByUserName(username);
-		return bookRepository.findByUser(user);
+		return bookRepository.getPendingBooks(user);
 	}
 
 	/**

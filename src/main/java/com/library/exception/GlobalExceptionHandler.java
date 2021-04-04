@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
 	 * Resource not found exception.
 	 *
 	 * @param ex {@link ResourceNotFoundException}
-	 * @param request{@link WebRequest}
+	 * @param request the request
 	 * @return {@link ResponseEntity}
 	 */
 	@ExceptionHandler(ResourceNotFoundException.class)
@@ -34,7 +34,7 @@ public class GlobalExceptionHandler {
 	 * Global exception handler.
 	 *
 	 * @param ex {@link Exception}
-	 * @param request{@link WebRequest}
+	 * @param request the request
 	 * @return {@link ResponseEntity}
 	 */
 	@ExceptionHandler(Exception.class)

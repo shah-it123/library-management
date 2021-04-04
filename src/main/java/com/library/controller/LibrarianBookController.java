@@ -22,8 +22,10 @@ import com.library.exception.ErrorDetails;
 import com.library.exception.ResourceNotFoundException;
 import com.library.model.Book;
 import com.library.model.ParameterMst;
+import com.library.model.projections.PendingBooks;
 import com.library.service.BookService;
 
+// TODO: Auto-generated Javadoc
 /**
  * Rest Controller for Admin(Librarian) for books related API mapping
  * All requests must be prefixed with "/admin".
@@ -159,7 +161,7 @@ public class LibrarianBookController {
 	 * @return {@link ResponseEntity} List of {@link Book}
 	 */
 	@GetMapping("books/pending/{username}")
-	public ResponseEntity<List<Book>> getPendingBooks(@PathVariable(value = "username") String username){
+	public ResponseEntity<List<PendingBooks>> getPendingBooks(@PathVariable(value = "username") String username){
 		return ResponseEntity.ok(bookService.getPendingBooks(username));
 	}
 	

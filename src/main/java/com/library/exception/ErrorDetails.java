@@ -5,7 +5,6 @@ package com.library.exception;
 
 import java.util.Date;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ErrorDetails.
  */

@@ -42,9 +42,9 @@ public class JwtFilter  extends OncePerRequestFilter {
 	/**
 	 * Do filter internal.
 	 *
-	 * @param req {@link HttpServletRequest}
-	 * @param res {@link HttpServletResponse}
-	 * @param chain {@link FilterChain}
+	 * @param request the request
+	 * @param response the response
+	 * @param filterChain the filter chain
 	 * @throws ServletException {@link ServletException}
 	 * @throws IOException {@link IOException} Signals that an I/O exception has occurred.
 	 */
